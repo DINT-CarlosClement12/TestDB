@@ -6,7 +6,73 @@
         xmlns:local="clr-namespace:TestDB"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+
+    <Window.Resources>
         
+        <DataTemplate x:Key="ClientTemplate">
+            <TextBlock>
+                <Run Text="{Binding id}"/>
+                <Run> - </Run>
+                <Run Text="{Binding nombre}"/>
+                <Run> </Run>
+                <Run Text="{Binding apellido}"/>
+            </TextBlock>
+        </DataTemplate>
+        
+    </Window.Resources>
+    
+    <Grid>
+        <TabControl x:Name="MainTabControl">
+            
+            <!--#region ListBox-->
+            <TabItem Header="ListBox">
+                <DataGrid x:Name="ClientsListBox" ItemsSource="{Binding}" ItemTemplate="{StaticResource ClientTemplate}" ColumnWidth="*"/>
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Insertar-->
+            <TabItem Header="Insertar">
+                <StackPanel x:Name="InsertarStackPanel">
+                    <TextBlock>Identidicador</TextBlock>
+                    <TextBox Margin="0,0,0,5" Text="{Binding id}" x:Name="InsertIDTextBox"/>
+                    <TextBlock>Nombre</TextBlock>
+                    <TextBox Margin="0,0,0,5" Text="{Binding nombre}" x:Name="InsertNameTextBox"/>
+                    <TextBlock>Apellido</TextBlock>
+                    <TextBox Margin="0,0,0,5" Text="{Binding apellido}" x:Name="InsertSurnameTextBox"/>
+
+                    <Button Content="Insertar" Click="InsertButton_Click"/>
+                </StackPanel>
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Eliminar-->
+            <TabItem Header="Eliminar">
+                <StackPanel>
+                    <ComboBox x:Name="ClientsRemoveComboBox" ItemsSource="{Binding}" DisplayMemberPath="id"/>
+
+                    <Button Content="Eliminar" Click="EliminarButton_Click"/>
+                </StackPanel>
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Modificar-->
+            <TabItem Header="Modificar">
+                <StackPanel x:Name="ModificarStackPanel" DataContext="{Binding ElementName=ClientsModifyComboBox, Path=SelectedItem}">
+                    <ComboBox x:Name="ClientsModifyComboBox" ItemsSource="{Binding}" DisplayMemberPath="id"/>
+
+                    <TextBlock>Identidicador</TextBlock>
+                    <TextBox Margin="0,0,0,5" x:Name="ModificarIdTextBox" Text="{Binding id}"/>
+                    <TextBlock>Nombre</TextBlock>
+                    <TextBox Margin="0,0,0,5" x:Name="ModificarNombreTextBox" Text="{Binding nombre}"/>
+                    <TextBlock>Apellido</TextBlock>
+                    <TextBox Margin="0,0,0,5" x:Name="ModificarApellidoTextBox" Text="{Binding apellido}"/>
+
+                    <Button Content="Modificar" Click="ModificarButton_Click"/>
+                </StackPanel>
+            </TabItem>
+            <!--#endregion-->
+            
+        </TabControl>
+
     </Grid>
 </Window>
